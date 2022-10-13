@@ -16,7 +16,8 @@ public class RPCClient implements AutoCloseable {
 
     public RPCClient() throws IOException, TimeoutException {
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("localhost");
+        factory.setHost("127.0.0.1");
+        factory.setPort(5672);
         factory.setUsername("mqadmin");
         factory.setPassword("Admin123XX_");
 
@@ -26,6 +27,10 @@ public class RPCClient implements AutoCloseable {
 
     public static void main(String[] argv) {
         try (RPCClient fibonacciRpc = new RPCClient()) {
+
+            String response_name = fibonacciRpc.call(Integer.toString(0));
+            System.out.println(" [.] Got '" + response_name + "'");
+
             for (int i = 0; i < 32; i++) {
                 String i_str = Integer.toString(i);
                 System.out.println(" [x] Requesting fib(" + i_str + ")");
